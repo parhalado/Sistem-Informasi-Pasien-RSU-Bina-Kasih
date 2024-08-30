@@ -40,15 +40,15 @@
             </thead>
 
 
-            @php $no = 1; @endphp
+
 
 
 
             <tbody>
 
-                @foreach($patients as $patient)
+                @foreach($patients as $index => $patient)
                 <tr>
-                    <td>{{ $no++ }}</td>
+                    <td>{{ $index + 1 }}</td>
                     <td>{{$patient->rm}}</td>
                     <td>{{$patient->nama}}</td>
                     <td>{{$patient->tanggal}}</td>

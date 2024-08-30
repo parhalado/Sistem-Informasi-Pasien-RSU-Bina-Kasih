@@ -32,7 +32,7 @@ class PatientController extends Controller
           
         ]);
 
-        Patient::create([
+        $patients =Patient::create([
             'rm' => $request->rm,
             'nama' => $request->nama,
               'tanggal' => $request->tanggal,
@@ -43,8 +43,7 @@ class PatientController extends Controller
             'fotopj' => $request->fotopj,
         ]);
 
-
-        $patients = Patient::create($request->all());
+       
         if ($request->hasFile('ktp')) {
             $request->file('ktp')->move('images/', $request->file('ktp')->getClientOriginalName());
             $patients->ktp = $request->file('ktp')->getClientOriginalName();
@@ -146,7 +145,7 @@ class PatientController extends Controller
         ]);
        if ($request->hasfile('ktp')) 
        {
-        $filepath= public_path('images');
+        $filepath= public_path('images/');
         $file = $request->file('ktp');
         $file_name = time(). $file->getClientOriginalName();
         $file->move($filepath,$file_name );
@@ -163,7 +162,7 @@ class PatientController extends Controller
        }
        if ($request->hasfile('kk')) 
        {
-        $filepath= public_path('images');
+        $filepath= public_path('images/');
         $file = $request->file('kk');
         $file_name = time(). $file->getClientOriginalName();
         $file->move($filepath,$file_name );
@@ -180,7 +179,7 @@ class PatientController extends Controller
        }
        if ($request->hasfile('fotolain')) 
        {
-        $filepath= public_path('images');
+        $filepath= public_path('images/');
         $file = $request->file('fotolain');
         $file_name = time(). $file->getClientOriginalName();
         $file->move($filepath,$file_name );
@@ -197,7 +196,7 @@ class PatientController extends Controller
        }
        if ($request->hasfile('ktppj')) 
        {
-        $filepath= public_path('images');
+        $filepath= public_path('images/');
         $file = $request->file('ktppj');
         $file_name = time(). $file->getClientOriginalName();
         $file->move($filepath,$file_name );
@@ -214,7 +213,7 @@ class PatientController extends Controller
        }
        if ($request->hasfile('fotopj')) 
        {
-        $filepath= public_path('images');
+        $filepath= public_path('images/');
         $file = $request->file('fotopj');
         $file_name = time(). $file->getClientOriginalName();
         $file->move($filepath,$file_name );
