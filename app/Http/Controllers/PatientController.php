@@ -80,6 +80,37 @@ class PatientController extends Controller
 
         $patients= Patient::find($id);
         $patients->delete();
+        if (!is_null($patients->ktp)) {
+            $ktp = public_path('images/' . $patients->ktp);
+            if (File::exists($ktp)) {
+                unlink($ktp);
+            }
+        }
+        if (!is_null($patients->kk)) {
+            $kk = public_path('images/' . $patients->kk);
+            if (File::exists($kk)) {
+                unlink($kk);
+            }
+        }
+        if (!is_null($patients->fotolain)) {
+            $fotolain = public_path('images/' . $patients->fotolain);
+            if (File::exists($fotolain)) {
+                unlink($fotolain);
+            }
+        }
+        if (!is_null($patients->ktppj)) {
+            $ktppj = public_path('images/' . $patients->ktppj);
+            if (File::exists($ktppj)) {
+                unlink($ktppj);
+            }
+        }
+        if (!is_null($patients->fotopj)) {
+            $fotopj = public_path('images/' . $patients->fotopj);
+            if (File::exists($fotopj)) {
+                unlink($fotopj);
+            }
+        }
+        
         return redirect('/pasien')->with('sukses', 'Data Berhasil di Hapus');
     }
     public function edit($id)
@@ -113,17 +144,93 @@ class PatientController extends Controller
             'ktppj' => $request->ktppj,
             'fotopj' => $request->fotopj,
         ]);
+       if ($request->hasfile('ktp')) 
+       {
+        $filepath= public_path('images');
+        $file = $request->file('ktp');
+        $file_name = time(). $file->getClientOriginalName();
+        $file->move($filepath,$file_name );
 
-        if ($request->hasFile('ktp'))
-    {
-            $file = $request->file('ktp');
-            $timestamp = str_replace([' ', ':'], '-', now()->toDateTimeString()); 
-            $name = $timestamp. '-' .$file->getClientOriginalName();
-            $patients->ktp = $name;
-            $file->move(public_path().'images/', $name);   
-            $patients->save();                  
-        }  
-        
+        if (!is_null($patients->ktp)) 
+        {
+            $oldImage=public_path('images/' . $patients->ktp);
+            if(File::exists($oldImage))
+            {
+                unlink ($oldImage);
+            }
+        }
+        $patients->ktp = $file_name;
+       }
+       if ($request->hasfile('kk')) 
+       {
+        $filepath= public_path('images');
+        $file = $request->file('kk');
+        $file_name = time(). $file->getClientOriginalName();
+        $file->move($filepath,$file_name );
+
+        if (!is_null($patients->ktp)) 
+        {
+            $oldImage=public_path('images/' . $patients->kk);
+            if(File::exists($oldImage))
+            {
+                unlink ($oldImage);
+            }
+        }
+        $patients->kk = $file_name;
+       }
+       if ($request->hasfile('fotolain')) 
+       {
+        $filepath= public_path('images');
+        $file = $request->file('fotolain');
+        $file_name = time(). $file->getClientOriginalName();
+        $file->move($filepath,$file_name );
+
+        if (!is_null($patients->fotolain)) 
+        {
+            $oldImage=public_path('images/' . $patients->fotolain);
+            if(File::exists($oldImage))
+            {
+                unlink ($oldImage);
+            }
+        }
+        $patients->fotolain = $file_name;
+       }
+       if ($request->hasfile('ktppj')) 
+       {
+        $filepath= public_path('images');
+        $file = $request->file('ktppj');
+        $file_name = time(). $file->getClientOriginalName();
+        $file->move($filepath,$file_name );
+
+        if (!is_null($patients->ktppj)) 
+        {
+            $oldImage=public_path('images/' . $patients->ktppj);
+            if(File::exists($oldImage))
+            {
+                unlink ($oldImage);
+            }
+        }
+        $patients->ktppj = $file_name;
+       }
+       if ($request->hasfile('fotopj')) 
+       {
+        $filepath= public_path('images');
+        $file = $request->file('fotopj');
+        $file_name = time(). $file->getClientOriginalName();
+        $file->move($filepath,$file_name );
+
+        if (!is_null($patients->fotopj)) 
+        {
+            $oldImage=public_path('images/' . $patients->fotopj);
+            if(File::exists($oldImage))
+            {
+                unlink ($oldImage);
+            }
+        }
+        $patients->fotopj = $file_name;
+       }
+
+        $result = $patients->save();
        
         return redirect('pasien')->with('success','Data berhasil di Ubah');
 
